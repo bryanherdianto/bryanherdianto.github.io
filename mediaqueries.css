@@ -54,7 +54,7 @@
   }
   .project-img {
     border-radius: 2rem 2rem 0 0;
-    height: fit-content;
+    height: 20px;
   }
   .project_data {
     border-radius: 0 0 2rem 2rem;
