@@ -52,6 +52,10 @@ a:hover {
   text-decoration-color: rgb(181, 181, 181);
 }
 
+.project_title a:hover {
+  text-underline-offset: 0.5rem;
+}
+
 .logo {
   font-size: 2rem;
 }
@@ -226,6 +230,7 @@ section {
   font-weight: 600;
   transition: all 300ms ease;
   padding: 1rem 2rem;
+  justify-content: center;
   width: 11.5rem;
   border-radius: 1rem;
 }
@@ -472,6 +477,7 @@ footer p {
 
 .category-btn {
   border: rgb(53, 53, 53) 0.1rem solid;
+  color: black;
   background-color: white;
 }
 
@@ -549,7 +555,6 @@ footer p {
 .projects-img {
   padding-top: 1rem;
   margin-left: 2rem;
-  border-radius: 2rem;
   width: 50%;
   height: 50%;
 }
@@ -557,7 +562,6 @@ footer p {
 .projects-title {
   margin-left: 2rem;
   padding-top: 2rem;
-
   margin-right: 4rem;
 }
 
@@ -578,4 +582,9 @@ footer p {
   color: rgb(85, 85, 85);
   margin-left: 2rem;
   margin-right: 5rem;
+}
+
+.btn-back a {
+  color: white;
+  text-decoration: none;
 }
