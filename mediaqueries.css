@@ -54,6 +54,7 @@
   }
   .project-img {
     border-radius: 2rem 2rem 0 0;
+    height: fit-content;
   }
   .project_data {
     border-radius: 0 0 2rem 2rem;
@@ -68,6 +69,10 @@
     white-space: nowrap;
     overflow-x: auto;
     justify-content: left;
+  }
+  .projects-img {
+    width: 80%;
+    height: 80%;
   }
 }
 
