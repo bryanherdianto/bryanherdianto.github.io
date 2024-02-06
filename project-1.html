@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bryan's Projects</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="mediaqueries.css" />
+</head>
+
+<body>
+    <nav id="desktop-nav">
+        <div class="logo">Bryan Herdianto</div>
+        <div>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <nav id="hamburger-nav">
+        <div class="logo">Bryan Herdianto</div>
+        <div class="hamburger-menu">
+            <div class="hamburger-icon" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu-links">
+                <li><a href="index.html#about" onclick="toggleMenu()">About</a></li>
+                <li>
+                    <a href="index.html#experience" onclick="toggleMenu()">Experience</a>
+                </li>
+                <li>
+                    <a href="index.html#skills" onclick="toggleMenu()">Skills</a>
+                </li>
+                <li>
+                    <a href="index.html#projects" onclick="toggleMenu()">Projects</a>
+                </li>
+                <li>
+                    <a href="index.html#contact" onclick="toggleMenu()">Contact</a>
+                </li>
+            </div>
+        </div>
+    </nav>
+    <div class="projects-btn-container">
+        <button class="btn-back btn-color-1">Back</button>
+    </div>
+    <h1 class="projects-title">
+        Discerning Between Mine and Rock Using Pandas and SKlearn
+    </h1>
+    <img src="./assets/traffic.jpeg" alt="" class="projects-img" />
+    <h3 class="projects-title">Project links</h3>
+    <div class="project-links">
+        <img src="./assets/github.png" alt="Github icon" class="icon contact-icon github-icon" />
+        <p>
+            <a href="https://github.com/bryanherdianto">Github</a>
+        </p>
+    </div>
+    <h3 class="projects-title">About this project</h3>
+    <div class="projects-description">
+        In discerning between mines and rocks using Pandas and scikit-learn, the process involves applying machine
+        learning techniques for binary classification. Initially, the dataset containing features of mines and rocks is
+        imported and preprocessed using Pandas, where data cleaning, handling missing values, and feature selection are
+        carried out. This involves splitting the dataset into feature columns (X) and target labels (y), followed by
+        feature engineering to enhance the model's performance. Subsequently, a suitable classification algorithm from
+        scikit-learn, such as logistic regression, decision trees, or random forests, is chosen for model training. The
+        dataset is then split into training and testing sets, and the model is trained on the training data.
+        Post-training, the model's performance is evaluated using metrics like accuracy, precision, recall, and
+        F1-score, ensuring its robustness through techniques like cross-validation to prevent overfitting. Further
+        optimization involves fine-tuning model hyperparameters using grid search or random search, while continuous
+        monitoring ensures the model's effectiveness in production. This iterative process aims to deploy a reliable
+        model for accurately discerning between mines and rocks.
+    </div>
+    <h3 class="projects-title">Skills</h3>
+    <ul class="projects-tags">
+        <li>PyTorch</li>
+        <li>Pandas</li>
+        <li>Seaborn</li>
+    </ul>
+    <footer>
+        <nav>
+            <div class="nav-links-container">
+                <ul class="nav-links">
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#experience">Experience</a></li>
+                    <li><a href="index.html#skills">Skills</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <p>Copyright &#169; 2023 Bryan Herdianto. All Rights Reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>

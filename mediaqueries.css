@@ -47,6 +47,30 @@
   }
 }
 
+@media screen and (max-width: 1000px) {
+  .project_item {
+    grid-template-columns: none;
+    grid-template-rows: auto auto;
+  }
+  .project-img {
+    border-radius: 2rem 2rem 0 0;
+  }
+  .project_data {
+    border-radius: 0 0 2rem 2rem;
+  }
+  .project_description {
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .project_categories {
+    white-space: nowrap;
+    overflow-x: auto;
+    justify-content: left;
+  }
+}
+
 @media screen and (max-width: 600px) {
   #contact,
   footer {
