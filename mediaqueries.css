@@ -10,9 +10,6 @@
   #projects {
     height: fit-content;
   }
-  .project-img {
-    height: 100%;
-  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -47,9 +44,6 @@
   }
   .about-containers {
     margin-top: 0;
-  }
-  .project-img {
-    height: 100%;
   }
 }
 
