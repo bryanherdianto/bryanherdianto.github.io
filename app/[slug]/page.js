@@ -1,41 +1,46 @@
-import Navbar from '../../components/Navbar'; // Adjust path as needed
-import Footer from '../../components/Footer'; // Adjust path as needed
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import { GraphQLClient, gql } from 'graphql-request';
 
-// Sample project data (replace with your actual data source or fetching logic)
-const projectsData = {
-  'neural-network-project': {
-    title: 'Neural Network Project',
-    imageUrl: '/traffic.jpeg',
-    fullDescription: 'This is a detailed description of the Neural Network project, explaining the architecture, dataset, training process, and results. We implemented a convolutional neural network (CNN) for image classification, achieving an accuracy of X% on the Y dataset. Key technologies used include Python, TensorFlow, and Keras.',
-    techStack: ['Python', 'TensorFlow', 'Keras', 'NumPy', 'Matplotlib'],
-    skillsUsed: ['Deep Learning', 'Image Classification', 'Model Training', 'Data Preprocessing'],
-    githubUrl: 'https://github.com/yourusername/neural-network-repo',
-    liveDemoUrl: '#' // or actual live demo URL
+const endpoint = 'https://graphql.datocms.com/';
+const client = new GraphQLClient(endpoint, {
+  headers: {
+    Authorization: `Bearer ${process.env.DATOCMS_API_KEY}`,
   },
-  'ecommerce-website': {
-    title: 'E-commerce Website',
-    imageUrl: '/traffic.jpeg',
-    fullDescription: 'A comprehensive overview of the E-commerce website project. This project involved building a fully responsive online store using React for the frontend and Node.js with Express for the backend. Features include user authentication, product listings, shopping cart functionality, and a checkout process. Stripe was integrated for payment processing.',
-    techStack: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe API', 'Tailwind CSS'],
-    skillsUsed: ['Full-stack Development', 'API Integration', 'User Authentication', 'Payment Processing', 'Responsive Design'],
-    githubUrl: 'https://github.com/yourusername/ecommerce-repo',
-    liveDemoUrl: '#'
-  },
-  'data-visualization-dashboard': {
-    title: 'Data Visualization Dashboard',
-    imageUrl: '/traffic.jpeg',
-    fullDescription: 'Detailed insights into the Data Visualization Dashboard project. This interactive dashboard was built using Tableau and Python (with libraries like Pandas and Matplotlib) to analyze and present complex datasets. It allows users to explore trends, patterns, and key metrics through various charts and graphs.',
-    techStack: ['Tableau', 'Python', 'Pandas', 'Matplotlib', 'SQL'],
-    skillsUsed: ['Data Visualization', 'Data Analysis', 'Dashboard Design', 'Data Storytelling'],
-    githubUrl: 'https://github.com/yourusername/data-viz-repo',
-    liveDemoUrl: '#'
-  }
-  // Add more projects here
-};
+});
+
+// Fetch all projects to find the one matching the slug
+async function getProjectData(slug) {
+  const response = await client.request(
+    gql`
+      {
+        allProjects(filter: { slug: { eq: "${slug}" } }) {
+          image {
+            url
+          }
+          name
+          slug
+          category
+          shortDescription
+          longDescription
+          techStack {
+            bulletPoint
+          }
+          skills {
+            bulletPoint
+          }
+          githubLink
+          deploymentLink
+        }
+      }
+    `
+  );
+  return response.allProjects[0];
+}
 
 export default async function ProjectDetailPage({ params }) {
-  const { slug } = params;
-  const project = projectsData[slug];
+  const { slug } = await params;
+  const project = await getProjectData(slug);
 
   if (!project) {
     return (
@@ -43,7 +48,7 @@ export default async function ProjectDetailPage({ params }) {
         <Navbar />
         <div className="py-20 px-6 text-center">
           <h1 className="text-4xl font-bold">Project Not Found</h1>
-          <p className="text-xl mt-4">Sorry, we couldn\'t find the project you\'re looking for.</p>
+          <p className="text-xl mt-4">Sorry, we couldn't find the project you're looking for.</p>
         </div>
         <Footer />
       </main>
@@ -56,15 +61,15 @@ export default async function ProjectDetailPage({ params }) {
       <section className="py-12 md:py-20 px-4 md:px-6 flex-grow">
         <div className="max-w-6xl mx-auto rounded-lg overflow-hidden md:p-8">
           {/* 1. A picture of the project */}
-          <img src={project.imageUrl} alt={project.title} className="w-full mt-8 h-auto md:h-96 object-cover rounded-lg mb-6 md:mb-8" />
+          <img src={project.image.url} alt={project.name} className="w-full mt-8 h-auto md:h-96 object-cover rounded-lg mb-6 md:mb-8" />
 
           <div className="px-6 pb-6 md:px-0 md:pb-0">
             {/* 2. The title of the project */}
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">{project.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">{project.name}</h1>
 
             {/* 3. The description of the project */}
             <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-6 whitespace-pre-line">
-              {project.fullDescription}
+              {project.longDescription}
             </p>
 
             {/* 4. The tech stack used for this project */}
@@ -74,7 +79,7 @@ export default async function ProjectDetailPage({ params }) {
                 <div className="flex flex-wrap gap-2">
                   {project.techStack.map((tech, index) => (
                     <span key={index} className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
-                      {tech}
+                      {tech.bulletPoint}
                     </span>
                   ))}
                 </div>
@@ -82,13 +87,13 @@ export default async function ProjectDetailPage({ params }) {
             )}
 
             {/* 5. The skills used for this project */}
-            {project.skillsUsed && project.skillsUsed.length > 0 && (
+            {project.skills && project.skills.length > 0 && (
               <div className="mb-8">
                 <h2 className="text-xl md:text-2xl font-semibold text-gray-700 mb-3">Skills Utilized</h2>
                 <div className="flex flex-wrap gap-2">
-                  {project.skillsUsed.map((skill, index) => (
+                  {project.skills.map((skill, index) => (
                     <span key={index} className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                      {skill}
+                      {skill.bulletPoint}
                     </span>
                   ))}
                 </div>
@@ -98,7 +103,7 @@ export default async function ProjectDetailPage({ params }) {
             {/* 6. The github and website icon */}
             <div className="flex flex-wrap gap-4 items-center">
               <a
-                href={project.githubUrl}
+                href={project.githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center bg-gray-800 text-white py-2 px-5 rounded-lg hover:bg-gray-700 transition duration-300 font-medium text-sm md:text-base"
@@ -106,15 +111,15 @@ export default async function ProjectDetailPage({ params }) {
                 <img src="/github.png" alt="GitHub" className="w-5 h-5 mr-2 filter invert" />
                 View on GitHub
               </a>
-              {project.liveDemoUrl && project.liveDemoUrl !== '#' && (
+              {project.deploymentLink && (
                 <a
-                  href={project.liveDemoUrl}
+                  href={project.deploymentLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center bg-blue-600 text-white py-2 px-5 rounded-lg hover:bg-blue-500 transition duration-300 font-medium text-sm md:text-base"
                 >
-                  <img src="/globe.svg" alt="Live Demo" className="w-5 h-5 mr-2 filter invert" />
-                  Live Demo / Website
+                  <img src="/globe.svg" alt="Live Demo" className="w-5 h-5 mr-2 brightness-0 invert" />
+                  Live Demo
                 </a>
               )}
             </div>
@@ -125,10 +130,3 @@ export default async function ProjectDetailPage({ params }) {
     </main>
   );
 }
-
-// Optional: If you have a fixed number of projects and want to pre-render them at build time
-// export async function generateStaticParams() {
-//   return Object.keys(projectsData).map((slug) => ({
-//     slug: slug,
-//   }));
-// }
