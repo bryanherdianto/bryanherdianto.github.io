@@ -6,7 +6,7 @@ function Hero() {
     return (
         <section id="profile" className="flex flex-col md:flex-row justify-center items-center min-h-screen gap-10 px-6 py-16">
             <div className="flex justify-center">
-                <img src="/profile-pic.png" alt="Bryan Herdianto profile picture" className="w-[275px] md:w-[400px] h-[275px] md:h-[400px] rounded-full object-cover" />
+                <img src="/profile-pic.png" alt="Bryan Herdianto profile picture" className="w-[275px] md:w-[400px] h-[275px] md:h-[400px] rounded-full object-cover my-4" />
             </div>
             <div className="flex flex-col items-center">
                 <p className="text-xl font-medium text-gray-600 mb-2">Hello, I'm</p>
