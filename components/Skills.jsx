@@ -13,7 +13,7 @@ function Skills({ skill }) {
                                 {block.skillComponent.map((skill, idx) => (
                                     <div key={idx} className="flex flex-col items-center">
                                         <img src="/checkmark.png" alt="Checkmark" className="w-7 h-7 mb-2" />
-                                        <p className="font-medium">{skill.name}</p>
+                                        <p className="font-medium text-center">{skill.name}</p>
                                         <p className="text-gray-600 text-sm">{skill.level}</p>
                                     </div>
                                 ))}

@@ -9,7 +9,6 @@ const client = new GraphQLClient(endpoint, {
   },
 });
 
-// Fetch all projects to find the one matching the slug
 async function getProjectData(slug) {
   const response = await client.request(
     gql`
@@ -60,19 +59,15 @@ export default async function ProjectDetailPage({ params }) {
       <Navbar />
       <section className="py-12 md:py-20 px-4 md:px-6 flex-grow">
         <div className="max-w-6xl mx-auto rounded-lg overflow-hidden md:p-8">
-          {/* 1. A picture of the project */}
           <img src={project.image.url} alt={project.name} className="w-full mt-8 h-auto md:h-96 object-cover rounded-lg mb-6 md:mb-8" />
 
           <div className="px-6 pb-6 md:px-0 md:pb-0">
-            {/* 2. The title of the project */}
             <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">{project.name}</h1>
 
-            {/* 3. The description of the project */}
             <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-6 whitespace-pre-line">
               {project.longDescription}
             </p>
 
-            {/* 4. The tech stack used for this project */}
             {project.techStack && project.techStack.length > 0 && (
               <div className="mb-6">
                 <h2 className="text-xl md:text-2xl font-semibold text-gray-700 mb-3">Tech Stack</h2>
@@ -86,7 +81,6 @@ export default async function ProjectDetailPage({ params }) {
               </div>
             )}
 
-            {/* 5. The skills used for this project */}
             {project.skills && project.skills.length > 0 && (
               <div className="mb-8">
                 <h2 className="text-xl md:text-2xl font-semibold text-gray-700 mb-3">Skills Utilized</h2>
@@ -100,7 +94,6 @@ export default async function ProjectDetailPage({ params }) {
               </div>
             )}
 
-            {/* 6. The github and website icon */}
             <div className="flex flex-wrap gap-4 items-center">
               <a
                 href={project.githubLink}

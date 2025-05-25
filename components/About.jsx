@@ -25,14 +25,14 @@ function About() {
                                 </div>
                             </div>
                         </div>
-                            <p className="text-gray-700 text-justify">
-                                I'm a student at the University of Indonesia studying <strong>Computer
-                                Engineering</strong>. I'm a <strong>quick learner</strong> and <strong>open-minded</strong> when 
-                                it comes to technology. I enjoy taking on <strong>challenging</strong> projects 
-                                that push my abilities to the max. I'm looking forward to
-                                connecting with <strong>like-minded individuals</strong> as I explore the exciting
-                                world of tech and tackle new opportunities.
-                            </p>
+                        <p className="text-gray-700 text-justify">
+                            I'm a student at the University of Indonesia studying <strong>Computer
+                                Engineering</strong>. I'm a <strong>quick learner</strong> and <strong>open-minded</strong> when
+                            it comes to technology. I enjoy taking on <strong>challenging</strong> projects
+                            that push my abilities to the max. I'm looking forward to
+                            connecting with <strong>like-minded individuals</strong> as I explore the exciting
+                            world of tech and tackle new opportunities.
+                        </p>
                     </div>
                 </div>
             </div>

@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 function Projects({ project }) {
     const [activeCategory, setActiveCategory] = useState('all');
+    const mixerRef = useRef(null);
 
     useEffect(() => {
-        // Import mixitup from CDN since we want to keep using it as-is
         const script = document.createElement('script');
         script.src = '/mixitup.min.js';
         script.async = true;
@@ -14,18 +14,27 @@ function Projects({ project }) {
         document.body.appendChild(script);
 
         return () => {
-            document.body.removeChild(script);
+            if (script.parentNode) {
+                document.body.removeChild(script);
+            }
+            if (mixerRef.current) {
+                mixerRef.current.destroy();
+            }
         };
     }, []);
 
     const initMixItUp = () => {
         if (typeof window !== 'undefined' && window.mixitup) {
-            const mixer = window.mixitup('.projects_container', {
+            if (mixerRef.current) {
+                mixerRef.current.destroy();
+            }
+
+            mixerRef.current = window.mixitup('.projects_container', {
                 selectors: {
                     target: '.project_item'
                 },
                 animation: {
-                    duration: 300
+                    enable: false
                 }
             });
         }
@@ -33,7 +42,25 @@ function Projects({ project }) {
 
     const handleCategoryClick = (category) => {
         setActiveCategory(category);
+
+        if (mixerRef.current) {
+            if (category === 'all') {
+                mixerRef.current.filter('all');
+            } else {
+                mixerRef.current.filter('.' + category);
+            }
+        }
     };
+
+    const uniqueCategories = project ?
+        [...new Set(project.map(p => p.categoryClassname))]
+            .map(cat => {
+                const proj = project.find(p => p.categoryClassname === cat);
+                return {
+                    categoryClassname: cat,
+                    category: proj.category
+                };
+            }) : [];
 
     return (
         <section id="projects" className="py-16 px-6 bg-gray-50">
@@ -49,32 +76,20 @@ function Projects({ project }) {
                     >
                         All
                     </button>
-                    <button
-                        className={`py-2 px-4 rounded-md transition-all ${activeCategory === 'ml' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
-                        data-filter=".ml"
-                        onClick={() => handleCategoryClick('ml')}
-                    >
-                        Machine Learning
-                    </button>
-                    <button
-                        className={`py-2 px-4 rounded-md transition-all ${activeCategory === 'web' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
-                        data-filter=".web"
-                        onClick={() => handleCategoryClick('web')}
-                    >
-                        Web Development
-                    </button>
-                    <button
-                        className={`py-2 px-4 rounded-md transition-all ${activeCategory === 'data' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
-                        data-filter=".data"
-                        onClick={() => handleCategoryClick('data')}
-                    >
-                        Data Analysis
-                    </button>
+                    {uniqueCategories.map((cat, index) => (
+                        <button key={index}
+                            className={`py-2 px-4 rounded-md transition-all ${activeCategory === cat.categoryClassname ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
+                            data-filter={`.${cat.categoryClassname}`}
+                            onClick={() => handleCategoryClick(cat.categoryClassname)}
+                        >
+                            {cat.category}
+                        </button>
+                    ))}
                 </div>
 
                 <div className="projects_container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {project && project.map((proj, index) => (
-                        <div key={index} className={`project_item ${proj.category} bg-white rounded-lg overflow-hidden shadow-md flex flex-col`}>
+                        <div key={index} className={`project_item ${proj.categoryClassname} bg-white rounded-lg overflow-hidden shadow-md flex flex-col`}>
                             <img src={proj.image.url} alt={proj.name} className="w-full h-48 object-cover" />
                             <div className="p-5 flex flex-col flex-grow">
                                 <h3 className="text-xl font-bold mb-2">{proj.name}</h3>

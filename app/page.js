@@ -83,6 +83,7 @@ async function getProjectData() {
           name
           slug
           category
+          categoryClassname
           shortDescription
           longDescription
           techStack {
